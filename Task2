@@ -1,0 +1,59 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Question structure
+struct Question {
+    string question;
+    vector<string> options;
+    int correctAnswer; // index of the correct answer
+};
+
+// Function to display a question and get the user's answer
+bool askQuestion(const Question& q) {
+    cout << q.question << endl;
+    for (int i = 0; i < q.options.size(); ++i) {
+        cout << i + 1 << ". " << q.options[i] << endl;
+    }
+
+    int userAnswer;
+    cout << "Your answer (1-" << q.options.size() << "): ";
+    cin >> userAnswer;
+
+    // Check if the answer is correct
+    if (userAnswer - 1 == q.correctAnswer) {
+        cout << "Correct!" << endl;
+        return true;
+    } else {
+        cout << "Incorrect! The correct answer was: " << q.options[q.correctAnswer] << endl;
+        return false;
+    }
+}
+
+int main() {
+    // Sample questions
+    vector<Question> questions = {
+        {"What is the capital of India?", {"Lucknow", "Agra", "New Delhi", "Hyderabad"}, 2},
+        {"Which planet is known as the Red Planet?", {"Earth", "Mars", "Jupiter", "Saturn"}, 1},
+        {"What is the largest ocean on Earth?", {"Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"}, 3},
+        {"Who wrote 'Harry Potter'?", {"Mark Twain", "Charles Dickens", "J.K. Rowling", "Jane Austen"}, 2},
+        {"What is the boiling point of water in Celsius?", {"90", "100", "110", "120"}, 1}
+    };
+
+    int score = 0;
+
+    cout << "Welcome to the Quiz Game!" << endl;
+    cout << "You will be asked a series of questions. Let's see how many you can answer correctly!" << endl;
+
+    for (const auto& q : questions) {
+        if (askQuestion(q)) {
+            score++;
+        }
+    }
+
+    cout << "Quiz finished! Your score: " << score << "/" << questions.size() << endl;
+
+    return 0;
+}
